@@ -8,7 +8,9 @@ Send resource packs from rpbt repositories.
     <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
-If you are creating a plugin/mod and shading the library, make sure to relocate all rpbt classes to avoid collisions. [See this example.](../README.md#Relocating)
+If you are creating a plugin/mod and shading the library, make sure to relocate all rpbt classes to avoid collisions. See the root README.md.
+
+Follow the instructions in `rpbt-core` for getting an HTTP repository.
 
 Serve works with any API as it only provides a url and hash for you to use. The following instructions are for the Bukkit API.
 ## Usage with the Bukkit API (`paper-api`)
@@ -38,7 +40,18 @@ serve.sendAsync("example", "1.0", repository,
         )
 );
 ```
-You should also handle the potential errors, `ResourceNotFoundException` and `IOException` by chaining the returned future with `.exceptionally
+You should also handle the potential errors, `ResourceNotFoundException` and `IOException`. For example by chaining the returned future with `.exceptionally`
+```java
+serve.sendAsync("example", "1.0", repository, player::setResourcePack)
+    .exceptionally(exception -> {
+        if (exception instanceof ResourceNotFoundException) {
+            player.sendMessage("The resource pack was not found!");
+        } else {
+            player.sendMessage("Internal error");
+        }
+    });
+```
+If you are using the synchronous version you can simply wrap `serve.send` in a try-catch.
 ## Usage with the Bukkit API (`spigot-api`/`bukkit-api`)
 Without Paper API, you need to use the hash as bytes.
 ```java

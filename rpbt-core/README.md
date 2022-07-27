@@ -9,7 +9,7 @@ Core library used by other rpbt libraries.
     <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
-If you are creating a plugin/mod and shading the library, make sure to relocate all rpbt classes to avoid collisions. [See this example.](../README.md#Relocating)
+If you are creating a plugin/mod and shading the library, make sure to relocate all rpbt classes to avoid collisions. See the root README.md.
 ## Usage
 Create an rpbt repository from a url.
 ```java
